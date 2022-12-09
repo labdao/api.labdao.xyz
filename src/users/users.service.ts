@@ -22,7 +22,6 @@ export class UsersService {
       result = await this.usersRepository.save(createUserDto);
       return result;
     } catch (e) {
-      console.log('ERROR');
       if (/(wallet)[\s\S]+(already exists)/.test(e.detail)) {
         throw new BadRequestException(
           'Account with this wallet address already exists.',

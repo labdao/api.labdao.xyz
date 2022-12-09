@@ -1,8 +1,10 @@
+import { Project } from 'src/projects/entities/project.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -74,4 +76,7 @@ export class User {
     name: 'avatar_url',
   })
   avatarUrl: string;
+
+  @OneToMany(() => Project, (project) => project.user)
+  projects: Project[];
 }
