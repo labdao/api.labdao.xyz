@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  IsUrl,
   MaxLength,
 } from 'class-validator';
 
@@ -26,7 +27,7 @@ export class CreateProjectDto {
   @IsOptional()
   summary?: string;
 
-  @IsString()
+  @IsUrl()
   @IsOptional()
   @MaxLength(255)
   website?: string;
