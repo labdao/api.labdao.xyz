@@ -8,6 +8,8 @@ import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { ProjectsModule } from './projects/projects.module';
 import { Project } from './projects/entities/project.entity';
+import { SkillsModule } from './skills/skills.module';
+import { Skill } from './skills/entities/skill.entity';
 
 @Module({
   imports: [
@@ -22,12 +24,13 @@ import { Project } from './projects/entities/project.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [User, Project],
+        entities: [User, Project, Skill],
         synchronize: false,
       }),
     }),
     UsersModule,
     ProjectsModule,
+    SkillsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
