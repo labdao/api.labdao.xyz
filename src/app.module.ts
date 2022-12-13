@@ -10,6 +10,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { Project } from './projects/entities/project.entity';
 import { SkillsModule } from './skills/skills.module';
 import { Skill } from './skills/entities/skill.entity';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { Skill } from './skills/entities/skill.entity';
     UsersModule,
     ProjectsModule,
     SkillsModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
