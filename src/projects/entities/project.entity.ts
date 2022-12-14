@@ -41,20 +41,20 @@ export class Project {
     type: 'text',
     nullable: true,
   })
-  summary: string;
+  summary?: string;
 
   @Column({
     type: 'varchar',
     length: 255,
     nullable: true,
   })
-  website: string;
+  website?: string;
 
   @Column({
     type: 'text',
     nullable: true,
   })
-  skills: string;
+  skills?: string;
 
   @Column({
     type: 'int',
@@ -66,5 +66,12 @@ export class Project {
     type: 'text',
     nullable: true,
   })
-  funding: string;
+  funding?: string;
+
+  @Column({
+    type: 'text',
+    nullable: true,
+    name: 'help_needed',
+  })
+  helpNeeded?: string;
 }
