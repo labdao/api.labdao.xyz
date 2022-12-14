@@ -36,3 +36,9 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Env
+.env
+
+# GCP App Engine
+app.standard.yaml
