@@ -32,7 +32,10 @@ export class ProjectsController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateProjectDto: UpdateProjectDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateProjectDto: UpdateProjectDto,
+  ) {
     return this.projectsService.update(+id, updateProjectDto);
   }
 

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Query, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { SkillsService } from './skills.service';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { SearchSkillsDto } from './dto/search-skills.dto';

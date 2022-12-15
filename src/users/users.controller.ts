@@ -33,12 +33,17 @@ export class UsersController {
   }
 
   @Get('wallet/:walletAddress')
-  async findByWalletAddress(@Param('walletAddress', ParseEthereumAddress) walletAddress: string) {
+  async findByWalletAddress(
+    @Param('walletAddress', ParseEthereumAddress) walletAddress: string,
+  ) {
     return this.usersService.findByWalletAddress(walletAddress);
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.usersService.update(+id, updateUserDto);
   }
 

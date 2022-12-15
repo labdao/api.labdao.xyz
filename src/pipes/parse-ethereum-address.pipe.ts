@@ -1,4 +1,9 @@
-import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from '@nestjs/common';
+import {
+  PipeTransform,
+  Injectable,
+  ArgumentMetadata,
+  BadRequestException,
+} from '@nestjs/common';
 import { isEthereumAddress, isString } from 'class-validator';
 
 @Injectable()
@@ -8,7 +13,9 @@ export class ParseEthereumAddress implements PipeTransform {
       const { type, data } = metadata;
       const internalParamType = type === 'param' ? 'path' : type;
       throw new BadRequestException(
-        `Validation failed (Ethereum adddress expected for ${internalParamType} param${data ? ` ${data}` : ''}`
+        `Validation failed (Ethereum adddress expected for ${internalParamType} param${
+          data ? ` ${data}` : ''
+        }`,
       );
     }
     return value;

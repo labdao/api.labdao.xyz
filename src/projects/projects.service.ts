@@ -24,7 +24,10 @@ export class ProjectsService {
     return this.checkForProject(id);
   }
 
-  async update(id: number, updateProjectDto: UpdateProjectDto): Promise<Project> {
+  async update(
+    id: number,
+    updateProjectDto: UpdateProjectDto,
+  ): Promise<Project> {
     await this.checkForProject(id);
     await this.projectsRepository.update(id, updateProjectDto);
     return this.projectsRepository.findOneBy({ id });

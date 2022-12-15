@@ -19,9 +19,7 @@ export class SkillsService {
       return result;
     } catch (e) {
       if (/(name)[\s\S]+(already exists)/.test(e.detail)) {
-        throw new BadRequestException(
-          'This skill already exists',
-        );
+        throw new BadRequestException('This skill already exists');
       }
       return e;
     }

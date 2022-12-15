@@ -5,6 +5,10 @@
 # Secrets
 .env
 
+# GCP
+app.yaml
+app.standard.yaml
+
 # Logs
 logs
 *.log

@@ -1,0 +1,7 @@
+runtime: nodejs16
+instance_class: F4
+env_variables:
+  DB_HOST: /cloudsql/<PROJECT_ID>:<GCP_REGION>:<CLOUD_SQL_NAME>
+  DB_USERNAME: <DB_USERNAME>
+  DB_PASSWORD: <DB_PASSWORD>
+  DB_NAME: <DB_NAME>
