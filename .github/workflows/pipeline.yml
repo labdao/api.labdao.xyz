@@ -1,0 +1,81 @@
+name: Pipeline
+run-name: ${{ github.actor }} started the pipeline run 🚀
+on: 
+  push:
+    branches:
+      - "main"
+env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_USERNAME: ${{ secrets.DB_USERNAME }}
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      id-token: "write"
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Set Node.js 16.12.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.12.0
+
+      - name: Run yarn install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
+
+      - name: Build production bundle
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: build:prod
+
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+
+      - name: Start GCE CloudSQL Proxy 
+        uses: mattes/gce-cloudsql-proxy-action@v1
+        with:
+          creds: ${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}
+          instance: ${{ secrets.CLOUDSQL_INSTANCE }}
+      
+      - name: Install psql
+        run: sudo apt-get install -y postgresql-client
+
+      - name: Test CloudSQL Connection
+        run: psql "host=127.0.0.1 port=5432 sslmode=disable dbname=${{ secrets.DB_NAME }} user=${{ secrets.DB_USERNAME }} password=${{ secrets.DB_PASSWORD }}"
+
+      - name: Run database migrations
+        run: yarn typeorm-ts-node-commonjs migration:run -d "${{ github.workspace }}/src/config/ormconfig.ts" 
+
+      - name: GCP authentication
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}
+
+      - name: Generate app.prod.yaml
+        run: |
+          cat << EOF > app.prod.yaml
+          runtime: nodejs16
+          instance_class: F4
+          env_variables:
+            DB_HOST: $DB_HOST
+            DB_USERNAME: $DB_USERNAME
+            DB_PASSWORD: $DB_PASSWORD
+            DB_NAME: $DB_NAME
+          EOF
+      
+      - name: Deploy to App Engine
+        uses: "google-github-actions/deploy-appengine@v1"
+        with:
+          project_id: ${{ secrets.APP_ENGINE_PROJECT_ID }}
+          working_directory: ${{ github.workspace }}
+          deliverables: app.prod.yaml
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
