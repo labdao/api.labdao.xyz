@@ -11,6 +11,7 @@ import {
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { ParseEthereumAddress } from 'src/pipes/parse-ethereum-address.pipe';
 
 @Controller('projects')
 export class ProjectsController {
@@ -43,4 +44,18 @@ export class ProjectsController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.projectsService.remove(+id);
   }
+
+  @Get('wallet/:walletAddress')
+  async findByWalletAddress(
+    @Param('walletAddress', ParseEthereumAddress) walletAddress: string,
+  ) {
+    return this.projectsService.findUserByWalletAddress(walletAddress);
+  }
+
+  // @Patch('wallet/:walletAddress')
+  // async findByWalletAddress(
+  //   @Param('walletAddress', ParseEthereumAddress) walletAddress: string,
+  // ) {
+  //   return this.usersService.findByWalletAddress(walletAddress);
+  // }
 }
