@@ -4,12 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { ProjectsModule } from './projects/projects.module';
-import { Project } from './projects/entities/project.entity';
 import { SkillsModule } from './skills/skills.module';
-import { Skill } from './skills/entities/skill.entity';
 import { HealthModule } from './health/health.module';
 
 @Module({
@@ -22,7 +19,8 @@ import { HealthModule } from './health/health.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Project, Skill],
+      // Only need .js files because entities are loaded from compiled JS files
+      entities: [__dirname + '/../**/*.entity.js'],
       synchronize: false,
     }),
     UsersModule,
