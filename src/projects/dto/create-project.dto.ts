@@ -44,4 +44,8 @@ export class CreateProjectDto {
   @IsString()
   @IsOptional()
   funding?: string;
+
+  @IsString()
+  @IsOptional()
+  helpNeeded?: string;
 }

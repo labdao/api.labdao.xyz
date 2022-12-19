@@ -1,9 +1,12 @@
 import { Project } from 'src/projects/entities/project.entity';
+import { Skill } from 'src/skills/entities/skill.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   Index,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -77,6 +80,21 @@ export class User {
   })
   avatarUrl: string;
 
-  @OneToMany(() => Project, (project) => project.user)
+  @OneToMany(
+    () => Project,
+    (project) => project.user,
+    { eager: true }
+  )
   projects: Project[];
+
+  @ManyToMany(
+    () => Skill,
+    (skill: Skill) => skill.users,
+    { eager: true}
+  )
+  @JoinTable({
+    joinColumn: { name: 'user_id' },
+    inverseJoinColumn: { name: 'skill_id' }
+  })
+  skills: Skill[];
 }

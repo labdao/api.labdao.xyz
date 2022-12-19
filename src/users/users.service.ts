@@ -55,7 +55,10 @@ export class UsersService {
   }
 
   private async checkForUser(userInfo: Partial<User>): Promise<User> {
-    const user = await this.usersRepository.findOneBy(userInfo);
+    const user = await this.usersRepository.findOne({
+      relations: ['projects', 'skills'],
+      where: userInfo,
+    });
     if (user === null) {
       throw new NotFoundException('User not found.');
     }
