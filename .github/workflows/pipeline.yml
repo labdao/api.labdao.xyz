@@ -35,22 +35,12 @@ jobs:
         with:
           cmd: build:prod
 
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-
       - name: Start GCE CloudSQL Proxy 
         uses: mattes/gce-cloudsql-proxy-action@v1
         with:
           creds: ${{ secrets.GCP_SERVICE_ACCOUNT_CREDENTIALS }}
           instance: ${{ secrets.CLOUDSQL_INSTANCE }}
       
-      - name: Install psql
-        run: sudo apt-get install -y postgresql-client
-
-      - name: Test CloudSQL Connection
-        run: psql "host=127.0.0.1 port=5432 sslmode=disable dbname=${{ secrets.DB_NAME }} user=${{ secrets.DB_USERNAME }} password=${{ secrets.DB_PASSWORD }}"
-
       - name: Run database migrations
         run: yarn typeorm-ts-node-commonjs migration:run -d "${{ github.workspace }}/src/config/ormconfig.ts" 
 
