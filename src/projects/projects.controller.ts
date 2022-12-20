@@ -45,17 +45,18 @@ export class ProjectsController {
     return this.projectsService.remove(+id);
   }
 
-  @Get('wallet/:walletAddress')
-  async findByWalletAddress(
-    @Param('walletAddress', ParseEthereumAddress) walletAddress: string,
-  ) {
-    return this.projectsService.findUserByWalletAddress(walletAddress);
-  }
-
-  // @Patch('wallet/:walletAddress')
-  // async findByWalletAddress(
+  // @Get('wallet/:walletAddress')
+  // findByWalletAddress(
   //   @Param('walletAddress', ParseEthereumAddress) walletAddress: string,
   // ) {
-  //   return this.usersService.findByWalletAddress(walletAddress);
+  //   return this.projectsService.findProjectByWalletAddress(walletAddress);
+  // }
+
+  // @Patch('wallet/:walletAddress')
+  // updateByWalletAddress(
+  //   @Param('walletAddress', ParseEthereumAddress) walletAddress: string,
+  //   @Body() updateProjectDto: UpdateProjectDto,
+  // ) {
+  //   return this.projectsService.updateByWalletAddress(walletAddress, updateProjectDto);
   // }
 }

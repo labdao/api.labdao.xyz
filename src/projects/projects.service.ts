@@ -15,6 +15,8 @@ export class ProjectsService {
     @InjectRepository(Project)
     private projectsRepository: Repository<Project>,
     private usersService: UsersService,
+    // @InjectRepository(User)
+    // private usersRepository: Repository<User>,
   ) {}
 
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
@@ -46,12 +48,21 @@ export class ProjectsService {
     await this.projectsRepository.delete(id);
   }
 
-  async findUserByWalletAddress(walletAddress: string): Promise<User> {
-    const userRepository = await AppDataSource.getRepository(User);
-    return userRepository.findOneBy({ walletAddress });
-    // const usersService = new UsersService(userRepository);
-    // return await usersService.findByWalletAddress(walletAddress);
-  }
+  // async updateByWalletAddress(
+  //   walletAddress: string,
+  //   updateProjectDto: UpdateProjectDto,
+  // ): Promise<User> {
+  //   const project = await this.findProjectByWalletAddress(walletAddress);
+  //   await this.projectsRepository.update(project.id, updateProjectDto);
+  //   return this.projectsRepository.findOneBy({ project.id });
+  // }
+
+  // findProjectByWalletAddress(walletAddress: string): Promise<User> {
+  //   const user = await this.usersRepository.findOneBy({ walletAddress });
+  //   return this.projectsRepository.findOneBy({
+  //     where: { user { id: user.id }},
+  //   });
+  // }
 
   private async checkForProject(id: number): Promise<Project> {
     const project = await this.projectsRepository.findOneBy({ id });
