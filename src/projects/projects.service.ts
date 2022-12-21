@@ -15,8 +15,6 @@ export class ProjectsService {
     @InjectRepository(Project)
     private projectsRepository: Repository<Project>,
     private usersService: UsersService,
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
   ) {}
 
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
@@ -54,13 +52,10 @@ export class ProjectsService {
   ): Promise<Project> {
     const project = await this.findProjectByWalletAddress(walletAddress);
     return this.update(project.id, updateProjectDto);
-    // await this.projectsRepository.update(project.id, updateProjectDto);
-    // return this.projectsRepository.findOneBy({ project.id });
   }
 
   async findProjectByWalletAddress(walletAddress: string): Promise<Project> {
-    const user = await this.usersRepository.findOneBy({ walletAddress });
-    console.log(user);
+    const user = await this.usersService.findByWalletAddress(walletAddress);
     return user.projects[0];
   }
 
@@ -69,7 +64,6 @@ export class ProjectsService {
     if (project === null) {
       throw new NotFoundException('Project not found.');
     }
-    console.log(project);
     return project;
   }
 }
