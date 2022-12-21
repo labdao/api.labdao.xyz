@@ -15,8 +15,8 @@ export class ProjectsService {
     @InjectRepository(Project)
     private projectsRepository: Repository<Project>,
     private usersService: UsersService,
-    // @InjectRepository(User)
-    // private usersRepository: Repository<User>,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
   ) {}
 
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
@@ -48,27 +48,28 @@ export class ProjectsService {
     await this.projectsRepository.delete(id);
   }
 
-  // async updateByWalletAddress(
-  //   walletAddress: string,
-  //   updateProjectDto: UpdateProjectDto,
-  // ): Promise<User> {
-  //   const project = await this.findProjectByWalletAddress(walletAddress);
-  //   await this.projectsRepository.update(project.id, updateProjectDto);
-  //   return this.projectsRepository.findOneBy({ project.id });
-  // }
+  async updateByWalletAddress(
+    walletAddress: string,
+    updateProjectDto: UpdateProjectDto,
+  ): Promise<Project> {
+    const project = await this.findProjectByWalletAddress(walletAddress);
+    return this.update(project.id, updateProjectDto);
+    // await this.projectsRepository.update(project.id, updateProjectDto);
+    // return this.projectsRepository.findOneBy({ project.id });
+  }
 
-  // findProjectByWalletAddress(walletAddress: string): Promise<User> {
-  //   const user = await this.usersRepository.findOneBy({ walletAddress });
-  //   return this.projectsRepository.findOneBy({
-  //     where: { user { id: user.id }},
-  //   });
-  // }
+  async findProjectByWalletAddress(walletAddress: string): Promise<Project> {
+    const user = await this.usersRepository.findOneBy({ walletAddress });
+    console.log(user);
+    return user.projects[0];
+  }
 
   private async checkForProject(id: number): Promise<Project> {
     const project = await this.projectsRepository.findOneBy({ id });
     if (project === null) {
       throw new NotFoundException('Project not found.');
     }
+    console.log(project);
     return project;
   }
 }
