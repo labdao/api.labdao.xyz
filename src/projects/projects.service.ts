@@ -53,6 +53,9 @@ export class ProjectsService {
 
   async findProjectByWalletAddress(walletAddress: string): Promise<Project> {
     const user = await this.usersService.findByWalletAddress(walletAddress);
+    if (!Array.isArray(user.projects) || user.projects.length === 0) {
+      throw new NotFoundException('No project associated with this user.');
+    }
     return user.projects[0];
   }
 
