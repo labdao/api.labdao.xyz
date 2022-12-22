@@ -1,5 +1,7 @@
 import { DataSource } from 'typeorm';
 
+// Packaged config for using single ormconfig
+// across development and production.
 let entitiesPath: string;
 const dbConfig = {
   host: process.env.DB_HOST,

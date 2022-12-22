@@ -9,9 +9,9 @@ import { ProjectsModule } from './projects/projects.module';
 import { SkillsModule } from './skills/skills.module';
 import { HealthModule } from './health/health.module';
 
-let ignoreEnvFile = false;
 // Read runtime environment variables in prod.
-// .env files are only used for development
+// .env files are only used in development
+let ignoreEnvFile = false;
 if (process.env.NODE_ENV == 'production') {
   ignoreEnvFile = true;
 }
