@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "main"
+      - "**/staging/**"
 env:
   DB_HOST: ${{ secrets.DB_HOST }}
   DB_NAME: ${{ secrets.DB_NAME }}
@@ -42,7 +43,7 @@ jobs:
           instance: ${{ secrets.CLOUDSQL_INSTANCE }}
       
       - name: Run database migrations
-        run: yarn typeorm-ts-node-commonjs migration:run -d "${{ github.workspace }}/src/config/ormconfig.ts" 
+        run: NODE_ENV=production yarn typeorm-ts-node-commonjs migration:run -d "${{ github.workspace }}/src/config/ormconfig.ts" 
 
       - name: GCP authentication
         uses: "google-github-actions/auth@v1"
