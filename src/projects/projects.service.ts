@@ -43,6 +43,22 @@ export class ProjectsService {
     await this.projectsRepository.delete(id);
   }
 
+  async updateByWalletAddress(
+    walletAddress: string,
+    updateProjectDto: UpdateProjectDto,
+  ): Promise<Project> {
+    const project = await this.findProjectByWalletAddress(walletAddress);
+    return this.update(project.id, updateProjectDto);
+  }
+
+  async findProjectByWalletAddress(walletAddress: string): Promise<Project> {
+    const user = await this.usersService.findByWalletAddress(walletAddress);
+    if (!Array.isArray(user.projects) || user.projects.length === 0) {
+      throw new NotFoundException('No project associated with this user.');
+    }
+    return user.projects[0];
+  }
+
   private async checkForProject(id: number): Promise<Project> {
     const project = await this.projectsRepository.findOneBy({ id });
     if (project === null) {
