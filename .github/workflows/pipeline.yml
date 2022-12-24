@@ -43,8 +43,8 @@ jobs:
           instance: ${{ secrets.CLOUDSQL_INSTANCE }}
       
       - name: Run database migrations
-        run: NODE_ENV=production yarn typeorm-ts-node-commonjs migration:run -d "${{ github.workspace }}/src/config/ormconfig.ts" 
-
+        run: NODE_ENV=production DB_HOST=$DB_HOST DB_USERNAME=$DB_USERNAME DB_PASSWORD=$DB_PASSWORD DB_NAME=$DB_NAME yarn typeorm-ts-node-commonjs migration:run -d "${{ github.workspace }}/src/config/ormconfig.ts" 
+        
       - name: GCP authentication
         uses: "google-github-actions/auth@v1"
         with:
