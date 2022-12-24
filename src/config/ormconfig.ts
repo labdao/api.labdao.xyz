@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm';
 // across development and production.
 let entitiesPath: string;
 const dbConfig = {
-  host: process.env.DB_HOST,
+  host: '',
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
@@ -12,6 +12,8 @@ const dbConfig = {
 
 if (process.env.NODE_ENV == 'production') {
   entitiesPath = '/../**/*.entity.js';
+  // GCE CloudSQL Proxy maps to localhost in GitHub Action step
+  dbConfig.host = '127.0.0.1';
 } else {
   import('dotenv').then((dotenv) => {
     dotenv.config();
