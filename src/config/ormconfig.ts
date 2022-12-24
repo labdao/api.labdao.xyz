@@ -12,6 +12,7 @@ const dbConfig = {
 
 if (process.env.NODE_ENV == 'production') {
   entitiesPath = '/../**/*.entity.js';
+  // GCE CloudSQL Proxy maps to localhost in GitHub Action step
   dbConfig.host = '127.0.0.1';
 } else {
   import('dotenv').then((dotenv) => {
@@ -23,8 +24,6 @@ if (process.env.NODE_ENV == 'production') {
   });
   entitiesPath = '/../**/*.entity.{js,ts}';
 }
-
-console.log(dbConfig.database);
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
