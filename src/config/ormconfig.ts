@@ -23,6 +23,8 @@ if (process.env.NODE_ENV == 'production') {
   entitiesPath = '/../**/*.entity.{js,ts}';
 }
 
+console.log(dbConfig.database);
+
 export const AppDataSource = new DataSource({
   type: 'postgres',
   host: dbConfig.host,
