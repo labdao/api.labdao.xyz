@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Project } from 'src/projects/entities/project.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -41,6 +42,11 @@ export class UsersService {
 
   findByWalletAddress(walletAddress: string): Promise<User> {
     return this.checkForUser({ walletAddress });
+  }
+
+  async findProjectsByUserId(id: number): Promise<Project[]> {
+    const user = await this.findOne(id);
+    return user.projects;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

@@ -32,6 +32,11 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
+  @Get(':id/projects')
+  findProjectsByUserId(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findProjectsByUserId(+id);
+  }
+
   @Get('wallet/:walletAddress')
   async findByWalletAddress(
     @Param('walletAddress', ParseEthereumAddress) walletAddress: string,
