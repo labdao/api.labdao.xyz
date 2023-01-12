@@ -40,7 +40,7 @@ export class UsersService {
   }
 
   findByWalletAddress(walletAddress: string): Promise<User> {
-    return this.usersRepository.findOneBy({ walletAddress });
+    return this.checkForUser({ walletAddress });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

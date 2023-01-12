@@ -18,31 +18,31 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
-  @MaxLength(50, { message: 'Last name must be less than 50 characters' })
+  @MaxLength(50)
   lastName?: string;
 
-  @IsEmail({}, { message: 'Email is not valid' })
-  @IsNotEmpty({ message: 'Email cannot be empty' })
-  @MaxLength(50, { message: 'Email must be less than 50 characters' })
+  @IsEmail()
+  @IsNotEmpty()
+  @MaxLength(50)
   email: string;
 
   @IsString()
   @IsOptional()
-  @MaxLength(50, { message: 'Role must be less than 50 characters' })
+  @MaxLength(50)
   role?: string;
 
   @IsString()
   @IsOptional()
-  @MaxLength(50, { message: 'Affiliation must be less than 50 characters' })
+  @MaxLength(50)
   affiliation?: string;
 
   @IsString()
   @IsOptional()
-  @MaxLength(100, { message: 'City must be less than 100 characters' })
+  @MaxLength(100)
   city?: string;
 
-  @IsEthereumAddress({ message: 'Wallet address is not valid' })
-  @IsNotEmpty({ message: 'Wallet address cannot be empty' })
+  @IsEthereumAddress()
+  @IsNotEmpty()
   walletAddress: string;
 
   @IsUrl({}, { message: 'Avatar URL is not valid' })
